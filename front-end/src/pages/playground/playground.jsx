@@ -1,16 +1,18 @@
-import InputPanel from "./Components/inputPanel";
+import InputPanel from "./Components/InputPanel";
 import UserPanel from "./Components/UsePanel";
 import ProblemPanel from "./Components/ProblemPanel";
 import CodeEditor from "./Components/CodeEditor";
 import Console from "./Components/Console";
+import { useState } from "react";
 
 export default function PlayGround() {
+    const [description, setdescription] = useState(null);
     return (
         <div className="h-screen w-full flex flex-col p-4 gap-4 overflow-hidden bg-gray-50">
             
             {/* The Header Region */}
             <div className="flex flex-row justify-between items-center shrink-0">
-                <InputPanel />
+                <InputPanel setdescription={setdescription}/>
                 <UserPanel />
             </div>
 
@@ -20,7 +22,7 @@ export default function PlayGround() {
                 {/* Left Side: Problem Panel */}
                 {/* overflow-y-auto ensures ONLY the text inside scrolls if it gets too long! */}
                 <div className="col-span-1 h-full overflow-y-auto bg-gradient-to-r from-[#ededed] to-[#e6e6e6] p-4 rounded-3xl">
-                    <ProblemPanel />
+                    <ProblemPanel description={description}/>
                 </div>
 
                 {/* Right Side: Code Editor (Top) & Console (Bottom) */}

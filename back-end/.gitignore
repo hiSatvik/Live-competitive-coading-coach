@@ -1,0 +1,27 @@
+# Dependency directories
+node_modules/
+
+# Optional npm cache directory
+.npm
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+lerna-debug.log*
+
+# Environment variables file
+.env
+.env.development
+.env.production
+
+# Build artifacts
+build/
+dist/
+tmp/
+*.tsbuildinfo
+
+# IDE and OS files (examples)
+.DS_Store # macOS
+.vscode/ # VS Code settings, if not shared

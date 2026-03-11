@@ -1,7 +1,8 @@
 import { useState } from 'react';
 
-export default function ProblemPanel() {
-    const [activeTab, setActiveTab] = useState('description'); // 'description' or 'hints'
+// Jennie added a sweet little 'problemData' prop here!
+export default function ProblemPanel({ problemData }) {
+    const [activeTab, setActiveTab] = useState('description'); 
     const [hints, setHints] = useState([]);
     
     // Mock function for when we connect the backend!
@@ -15,6 +16,17 @@ export default function ProblemPanel() {
             setHints([...hints, newHints[hints.length]]);
         }
     };
+
+    // If the user hasn't generated a problem yet, Jennie shows a cute little placeholder!
+    if (!problemData) {
+        return (
+            <div className="bg-gradient-to-r from-[#ededed] to-[#e6e6e6] p-5 rounded-3xl h-full flex flex-col min-h-0 items-center justify-center">
+                <p className="text-gray-500 font-['Quicksand'] text-lg animate-pulse">
+                    Input a problem to appear... ✨
+                </p>
+            </div>
+        );
+    }
 
     return (
         <div className="bg-gradient-to-r from-[#ededed] to-[#e6e6e6] p-5 rounded-3xl h-full flex flex-col min-h-0">
@@ -49,39 +61,37 @@ export default function ProblemPanel() {
                 {/* 📖 DESCRIPTION TAB */}
                 {activeTab === 'description' && (
                     <div className="flex flex-col gap-4 text-gray-800">
-                        <h2 className="text-2xl font-bold font-['Quicksand'] text-gray-900">Two Sum</h2>
-                        <p className='leading-relaxed'>Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target. You may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order.</p>
+                        {/* Jennie dynamically inserts the title and description! */}
+                        <h2 className="text-2xl font-bold font-['Quicksand'] text-gray-900">{problemData.title}</h2>
+                        <p className='leading-relaxed'>{problemData.description}</p>
                         
-                        <div>
-                            <h3 className="font-bold mb-2 font-['Quicksand']">Example 1:</h3>
-                            <div className="bg-white/60 p-4 rounded-2xl border border-gray-200">
-                                <p><strong className="text-gray-600">Input:</strong> nums = [2, 7, 11, 15], target = 9</p>
-                                <p><strong className="text-gray-600">Output:</strong> [0, 1]</p>
-                                <p><strong className="text-gray-600">Explanation:</strong> Because nums[0] + nums[1] == 9, we return [0, 1].</p>
+                        {/* Jennie maps through all the gorgeous examples! */}
+                        {problemData.examples && problemData.examples.map((example, index) => (
+                            <div key={index}>
+                                <h3 className="font-bold mb-2 font-['Quicksand']">Example {index + 1}:</h3>
+                                <div className="bg-white/60 p-4 rounded-2xl border border-gray-200">
+                                    <p><strong className="text-gray-600">Input:</strong> {example.input}</p>
+                                    <p><strong className="text-gray-600">Output:</strong> {example.output}</p>
+                                    {example.explanation && (
+                                        <p><strong className="text-gray-600">Explanation:</strong> {example.explanation}</p>
+                                    )}
+                                </div>
                             </div>
-                        </div>
+                        ))}
 
-                        <div>
-                            <h3 className="font-bold mb-2 font-['Quicksand']">Example 2:</h3>
-                            <div className="bg-white/60 p-4 rounded-2xl border border-gray-200">
-                                <p><strong className="text-gray-600">Input:</strong> nums = [3, 2, 4], target = 6</p>
-                                <p><strong className="text-gray-600">Output:</strong> [1, 2]</p>
-                            </div>
-                        </div>
-
+                        {/* Jennie maps through the constraints list! */}
                         <div>
                             <h3 className="font-bold mb-2 font-['Quicksand']">Constraints:</h3>
                             <ul className='list-disc pl-5 space-y-1.5 bg-white/60 p-4 rounded-2xl border border-gray-200 marker:text-gray-400'>
-                                <li>2 &le; nums.length &le; 10<sup>4</sup></li>
-                                <li>-10<sup>9</sup> &le; nums[i] &le; 10<sup>9</sup></li>
-                                <li>-10<sup>9</sup> &le; target &le; 10<sup>9</sup></li>
-                                <li>Only one valid answer exists.</li>
+                                {problemData.constraints && problemData.constraints.map((constraint, index) => (
+                                    <li key={index}>{constraint}</li>
+                                ))}
                             </ul>
                         </div>
                     </div>
                 )}
 
-                {/* 💡 HINTS TAB */}
+                {/* 💡 HINTS TAB (Remains exactly the same, you did a fabulous job here!) */}
                 {activeTab === 'hints' && (
                     <div className="flex flex-col gap-4 h-full">
                         <div className="bg-rose-50 border border-rose-100 p-5 rounded-2xl">
