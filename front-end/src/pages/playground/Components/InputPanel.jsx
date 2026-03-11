@@ -7,9 +7,10 @@ export default function InputPanel() {
                 focus:border-b-gray-400 focus:ring-2 focus:ring-gray-300 focus:shadow-inner"
             />
             <button
-                style={{ fontFamily: "'Dancing Script', cursive" }}
-                className="bg-rose-300 text-white p-3 px-10 rounded-3xl text-2xl 
-                   hover:bg-rose-400 transition-colors shadow-md active:scale-95"
+                className="text-xl px-6 py-3 bg-rose-300 rounded-2xl text-white font-bold font-['Quicksand']
+                           transition-all duration-300 ease-in-out
+                           hover:bg-rose-400 hover:-translate-y-1 hover:shadow-lg hover:shadow-rose-200/60
+                           active:scale-95 active:translate-y-0"
             >
                 Start!!
             </button>        </div>

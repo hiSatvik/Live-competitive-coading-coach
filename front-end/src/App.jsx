@@ -1,11 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ProblemPanel from "./pages/playground/Components/ProblemPanel";
+import PlayGround from "./pages/playground/playground";
 
 export default function Playground() {
     const router = createBrowserRouter([
         {
             path: "/",
-            element: <ProblemPanel/>
+            element: <PlayGround/>
         }
     ])
     return (
