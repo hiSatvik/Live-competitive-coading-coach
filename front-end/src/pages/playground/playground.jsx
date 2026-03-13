@@ -4,6 +4,7 @@ import ProblemPanel from "./Components/ProblemPanel";
 import CodeEditor from "./Components/CodeEditor";
 import Console from "./Components/Console";
 import { useState } from "react";
+import ControlButtons from "./Components/ControlButtons";
 
 export default function PlayGround() {
     const [description, setdescription] = useState(null);
@@ -13,6 +14,7 @@ export default function PlayGround() {
             {/* The Header Region */}
             <div className="flex flex-row justify-between items-center shrink-0">
                 <InputPanel setdescription={setdescription}/>
+                <ControlButtons />
                 <UserPanel />
             </div>
 
@@ -22,7 +24,7 @@ export default function PlayGround() {
                 {/* Left Side: Problem Panel */}
                 {/* overflow-y-auto ensures ONLY the text inside scrolls if it gets too long! */}
                 <div className="col-span-1 h-full overflow-y-auto bg-gradient-to-r from-[#ededed] to-[#e6e6e6] p-4 rounded-3xl">
-                    <ProblemPanel description={description}/>
+                    <ProblemPanel problemData={description}/>
                 </div>
 
                 {/* Right Side: Code Editor (Top) & Console (Bottom) */}
@@ -35,7 +37,7 @@ export default function PlayGround() {
                     
                     {/* Console gets the rest of the bottom space */}
                     <div className="flex-[2] min-h-0 rounded-3xl overflow-hidden shadow-sm border border-gray-100">
-                        <Console />
+                        <Console description={description} consoleOutput={null}/>
                     </div>
                     
                 </div>

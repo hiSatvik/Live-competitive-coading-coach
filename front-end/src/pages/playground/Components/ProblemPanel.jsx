@@ -1,19 +1,35 @@
 import { useState } from 'react';
+import axios from "axios";
 
 // Jennie added a sweet little 'problemData' prop here!
 export default function ProblemPanel({ problemData }) {
     const [activeTab, setActiveTab] = useState('description'); 
     const [hints, setHints] = useState([]);
+    const [isHintLoading, setIsHintLoading ] = useState(false);
     
     // Mock function for when we connect the backend!
-    const handleGenerateHint = () => {
-        if (hints.length < 3) {
-            const newHints = [
-                "Hint 1: Try storing visited numbers in a hashmap.",
-                "Hint 2: As you iterate, check if (target - current number) exists in your map.",
-                "Hint 3: You only need to check each number once. Time complexity can be O(n)!"
-            ];
-            setHints([...hints, newHints[hints.length]]);
+    const handleGenerateHint = async () => {
+        if (hints.length >= 3 || isHintLoading) return;
+        setIsHintLoading(true);
+
+        try {
+            const nextHint = hints.length + 1;
+
+            const response = await axios.post("http://localhost:8080/api/v1/playground/generate-hint", {
+                title: problemData.title,
+                description: problemData.description,
+                hintNumber: nextHint,
+            });
+
+            console.log(response.data.hint);
+
+            const newhint = `Hint ${nextHint} : ${response.data.hint}`;
+            
+            setHints([...hints, newhint]);
+        } catch (err) {
+            console.error("Err while fetching");
+        } finally {
+            setIsHintLoading(false);
         }
     };
 
@@ -70,7 +86,7 @@ export default function ProblemPanel({ problemData }) {
                             <div key={index}>
                                 <h3 className="font-bold mb-2 font-['Quicksand']">Example {index + 1}:</h3>
                                 <div className="bg-white/60 p-4 rounded-2xl border border-gray-200">
-                                    <p><strong className="text-gray-600">Input:</strong> {example.input}</p>
+                                    <p><strong className="text-gray-600">Input:</strong> {example.displayInput}</p>
                                     <p><strong className="text-gray-600">Output:</strong> {example.output}</p>
                                     {example.explanation && (
                                         <p><strong className="text-gray-600">Explanation:</strong> {example.explanation}</p>
