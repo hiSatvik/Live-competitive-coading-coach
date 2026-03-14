@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 
 export default function Console({ consoleOutput, description }) {
-
     const [activeTab, setActiveTab] = useState(0);
 
-    // Convert examples + testCases into unified structure
+    // Jennie's Note: We define the default testcases from the problem description first
     const testcases = [
         ...(description?.examples || []).map((ex) => ({
             displayInput: ex.displayInput || ex.input,
@@ -22,7 +21,7 @@ export default function Console({ consoleOutput, description }) {
         }))
     ];
 
-    // Reset active tab when problem or execution changes
+    // Reset active tab when problem or execution changes, so it stays fresh!
     useEffect(() => {
         setActiveTab(0);
     }, [description, consoleOutput]);
@@ -41,7 +40,8 @@ export default function Console({ consoleOutput, description }) {
 
     const compilationError = consoleOutput?.error || "";
 
-    // Judge results override original testcases
+    // Jennie's Logic: If we have results from the execution, use those! 
+    // Otherwise, show the default testcases.
     const hasExecutionResults =
         (status === "success" || status === "failed") &&
         consoleOutput?.results?.length > 0;
@@ -53,7 +53,7 @@ export default function Console({ consoleOutput, description }) {
     return (
         <div className="bg-gradient-to-r from-[#ededed] to-[#e6e6e6] p-4 flex flex-col h-full min-h-0">
 
-            {/* Header */}
+            {/* Header - Let's show how well we did! */}
             <div className="flex justify-between items-center mb-4 px-2 shrink-0">
                 <h2 className="text-xl font-bold text-gray-800 font-['Quicksand']">
                     Console
@@ -87,7 +87,7 @@ export default function Console({ consoleOutput, description }) {
             {/* Console Body */}
             <div className="bg-neutral-50 flex-1 rounded-2xl p-5 overflow-y-auto shadow-inner text-sm min-h-0">
 
-                {/* Empty state */}
+                {/* Empty state - So lonely! */}
                 {status === "idle" && displayTabs.length === 0 && (
                     <div className="text-gray-400 h-full flex items-center justify-center italic text-lg">
                         Generate a problem to see test cases here...
@@ -108,11 +108,11 @@ export default function Console({ consoleOutput, description }) {
                     </div>
                 )}
 
-                {/* Testcases */}
+                {/* Testcases - The stars of the show! */}
                 {status !== "running" && status !== "error" && displayTabs.length > 0 && (
                     <div className="flex flex-col gap-5 pb-4">
 
-                        {/* Tabs */}
+                        {/* Tabs for each Case */}
                         <div className="flex gap-2 border-b border-gray-200 pb-3 overflow-x-auto">
                             {displayTabs.map((tc, index) => (
                                 <button
@@ -124,7 +124,6 @@ export default function Console({ consoleOutput, description }) {
                                             : "hover:bg-gray-200 text-gray-500"
                                         }`}
                                 >
-
                                     <span
                                         className={`w-2.5 h-2.5 rounded-full 
                                         ${!hasExecutionResults
@@ -134,14 +133,12 @@ export default function Console({ consoleOutput, description }) {
                                                     : "bg-red-400"
                                             }`}
                                     />
-
                                     Case {index + 1}
-
                                 </button>
                             ))}
                         </div>
 
-                        {/* Active testcase */}
+                        {/* Active testcase details */}
                         {displayTabs[activeTab] && (
                             <div className="flex flex-col gap-4 mt-1">
 
@@ -150,30 +147,27 @@ export default function Console({ consoleOutput, description }) {
                                     <span className="text-gray-400 font-bold text-xs uppercase">
                                         Input
                                     </span>
-
                                     <div className="bg-gray-100 p-3 rounded-xl text-gray-700 whitespace-pre-wrap">
                                         {displayTabs[activeTab].displayInput ||
                                             displayTabs[activeTab].input}
                                     </div>
                                 </div>
 
-                                {/* Expected */}
+                                {/* Expected Output */}
                                 <div>
                                     <span className="text-gray-400 font-bold text-xs uppercase">
                                         Expected
                                     </span>
-
                                     <div className="bg-gray-100 p-3 rounded-xl text-gray-700 whitespace-pre-wrap">
                                         {displayTabs[activeTab].expectedOutput}
                                     </div>
                                 </div>
 
-                                {/* Output */}
+                                {/* Actual Output */}
                                 <div>
                                     <span className="text-gray-400 font-bold text-xs uppercase">
                                         Output
                                     </span>
-
                                     {!hasExecutionResults ? (
                                         <div className="bg-gray-50 p-3 rounded-xl text-gray-400 italic">
                                             Run your code to see the output...
@@ -194,10 +188,8 @@ export default function Console({ consoleOutput, description }) {
 
                             </div>
                         )}
-
                     </div>
                 )}
-
             </div>
         </div>
     );

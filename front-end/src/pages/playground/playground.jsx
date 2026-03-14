@@ -8,13 +8,16 @@ import ControlButtons from "./Components/ControlButtons";
 
 export default function PlayGround() {
     const [description, setdescription] = useState(null);
+    const [code, setcode] = useState(null);
+    const [output, setoutput] = useState(null);
+
     return (
         <div className="h-screen w-full flex flex-col p-4 gap-4 overflow-hidden bg-gray-50">
             
             {/* The Header Region */}
             <div className="flex flex-row justify-between items-center shrink-0">
                 <InputPanel setdescription={setdescription}/>
-                <ControlButtons />
+                <ControlButtons userCode={code} problemData={description} userOutput={setoutput}/>
                 <UserPanel />
             </div>
 
@@ -32,12 +35,12 @@ export default function PlayGround() {
                     
                     {/* Code Editor gets flex-[3] so it takes up slightly more room than the console */}
                     <div className="flex-[3] min-h-0 rounded-3xl overflow-hidden shadow-sm border border-gray-100">
-                        <CodeEditor />
+                        <CodeEditor userCode={setcode}/>
                     </div>
                     
                     {/* Console gets the rest of the bottom space */}
                     <div className="flex-[2] min-h-0 rounded-3xl overflow-hidden shadow-sm border border-gray-100">
-                        <Console description={description} consoleOutput={null}/>
+                        <Console description={description} consoleOutput={output}/>
                     </div>
                     
                 </div>

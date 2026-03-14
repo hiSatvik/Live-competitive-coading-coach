@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import Editor from '@monaco-editor/react';
 
-export default function CodeEditor() {
-    const [language, setLanguage] = useState("javascript"); // Jennie set JS to match your picture!
+export default function CodeEditor({userCode}) {
+    const [language, setLanguage] = useState("javascript");
+
+
 
     const defaultCode = {
         cpp: "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your magical code here\n    return 0;\n}",
@@ -11,7 +13,7 @@ export default function CodeEditor() {
         java: "class Solution {\n    public int[] twoSum(int[] nums, int target) {\n        // Write your magical code here\n    }\n}"
     };
 
-    const [code, setCode] = useState(defaultCode["javascript"]);
+    const [code, setCode] = useState(defaultCode["cpp"]);
 
     useEffect(() => {
         setCode(defaultCode[language]);
@@ -52,7 +54,7 @@ export default function CodeEditor() {
                     language={language}
                     theme="light" 
                     value={code}  
-                    onChange={(newCode) => setCode(newCode)} 
+                    onChange={(newCode) => userCode(newCode)} 
                     options={{
                         fontSize: 16,
                         fontFamily: "'Cascadia Mono', monospace",
