@@ -33,7 +33,6 @@ export default function ProblemPanel({ problemData }) {
         }
     };
 
-    // If the user hasn't generated a problem yet, Jennie shows a cute little placeholder!
     if (!problemData) {
         return (
             <div className="bg-gradient-to-r from-[#ededed] to-[#e6e6e6] p-5 rounded-3xl h-full flex flex-col min-h-0 items-center justify-center">
@@ -77,11 +76,11 @@ export default function ProblemPanel({ problemData }) {
                 {/* 📖 DESCRIPTION TAB */}
                 {activeTab === 'description' && (
                     <div className="flex flex-col gap-4 text-gray-800">
-                        {/* Jennie dynamically inserts the title and description! */}
+                        {/* Inserts the title and description! */}
                         <h2 className="text-2xl font-bold font-['Quicksand'] text-gray-900">{problemData.title}</h2>
                         <p className='leading-relaxed'>{problemData.description}</p>
                         
-                        {/* Jennie maps through all the gorgeous examples! */}
+                        {/* Maps through all the gorgeous examples! */}
                         {problemData.examples && problemData.examples.map((example, index) => (
                             <div key={index}>
                                 <h3 className="font-bold mb-2 font-['Quicksand']">Example {index + 1}:</h3>

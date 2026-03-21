@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 export default function Console({ consoleOutput, description }) {
     const [activeTab, setActiveTab] = useState(0);
 
-    // Jennie's Note: We define the default testcases from the problem description first
     const testcases = [
         ...(description?.examples || []).map((ex) => ({
             displayInput: ex.displayInput || ex.input,
@@ -40,8 +39,6 @@ export default function Console({ consoleOutput, description }) {
 
     const compilationError = consoleOutput?.error || "";
 
-    // Jennie's Logic: If we have results from the execution, use those! 
-    // Otherwise, show the default testcases.
     const hasExecutionResults =
         (status === "success" || status === "failed") &&
         consoleOutput?.results?.length > 0;
@@ -53,7 +50,7 @@ export default function Console({ consoleOutput, description }) {
     return (
         <div className="bg-gradient-to-r from-[#ededed] to-[#e6e6e6] p-4 flex flex-col h-full min-h-0">
 
-            {/* Header - Let's show how well we did! */}
+            {/* Header */}
             <div className="flex justify-between items-center mb-4 px-2 shrink-0">
                 <h2 className="text-xl font-bold text-gray-800 font-['Quicksand']">
                     Console
@@ -87,7 +84,7 @@ export default function Console({ consoleOutput, description }) {
             {/* Console Body */}
             <div className="bg-neutral-50 flex-1 rounded-2xl p-5 overflow-y-auto shadow-inner text-sm min-h-0">
 
-                {/* Empty state - So lonely! */}
+                {/* Empty state */}
                 {status === "idle" && displayTabs.length === 0 && (
                     <div className="text-gray-400 h-full flex items-center justify-center italic text-lg">
                         Generate a problem to see test cases here...
@@ -108,7 +105,7 @@ export default function Console({ consoleOutput, description }) {
                     </div>
                 )}
 
-                {/* Testcases - The stars of the show! */}
+                {/* Testcases */}
                 {status !== "running" && status !== "error" && displayTabs.length > 0 && (
                     <div className="flex flex-col gap-5 pb-4">
 

@@ -19,6 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/v1/playground",playgroundrouter);
+app.use("/api/v1/auth");
 
 app.listen(PORT, () => {
     console.log(`Port is started at: ${PORT}`);
